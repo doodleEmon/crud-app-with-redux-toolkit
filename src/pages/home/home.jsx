@@ -13,11 +13,11 @@ const Home = () => {
         dispatch(fetchPosts())
     }, [dispatch]);
 
-    console.log("🚀 ~ Home ~ posts:", posts);
+    // console.log("🚀 ~ Home ~ posts:", posts);
     let content;
 
     if (isLoading === true && isError === false && error === null) {
-        content = <h3>Posts loading...</h3>;
+        content = <h3>Loading posts...</h3>;
     }
 
     if (isLoading === false && isError === true) {
@@ -27,7 +27,7 @@ const Home = () => {
     if (isLoading === false && isError === false && error === null) {
         content = <div className='grid grid-cols-3 gap-4 my-3'>
             {posts.map(post => (
-                <div key={post.id}>
+                <div key={post.id} className='border p-2'>
                     <h3 onClick={() => navigate(`/post/${post.id}`)} className='text-red-500 font-semibold uppercase cursor-pointer'>{post.title}</h3>
                     <p>{post.body}</p>
                     <div className='flex gap-2 my-2'>
@@ -43,7 +43,7 @@ const Home = () => {
         <div>
             {content}
             <div>
-
+                pagination section
             </div>
         </div>
     )
