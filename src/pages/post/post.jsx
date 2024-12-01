@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
-import { fetchPostById } from '../../redux/slices/post/postSlice';
+import { useNavigate, useParams } from 'react-router-dom'
+import { deletePost, fetchPostById } from '../../redux/slices/post/postSlice';
 
 const Post = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { isLoading, isError, error, selectedPost } = useSelector(state => state.posts);
+    const navigate = useNavigate();
+
+    const handleDeletePost = (id) => {
+        dispatch(deletePost(id))
+        navigate('/');
+    }
 
     useEffect(() => {
         dispatch(fetchPostById(id))
@@ -28,7 +34,7 @@ const Post = () => {
             <p>{selectedPost.body}</p>
             <div className='flex gap-2 my-2'>
                 <button className='bg-green-500 px-4 py-1 text-white'>Edit</button>
-                <button className='bg-red-500 px-4 py-1 text-white'>Delete</button>
+                <button onClick={() => handleDeletePost(selectedPost.id)} className='bg-red-500 px-4 py-1 text-white'>Delete</button>
             </div>
         </div>
     }

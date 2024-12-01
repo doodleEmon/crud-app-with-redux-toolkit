@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getPostById, getPosts } from '../../queries/posts';
+import { getPostById, getPosts, deletePostById } from '../../queries/posts';
 
 const initialState = {
     posts: [],
@@ -18,6 +18,12 @@ export const fetchPosts = createAsyncThunk("posts/fetch",
 export const fetchPostById = createAsyncThunk("post/fetchById",
     async (id) => {
         const post = await getPostById(id);
+        return post;
+    })
+
+export const deletePost = createAsyncThunk("post/deleteById",
+    async (id) => {
+        const post = await deletePostById(id);
         return post;
     })
 
@@ -52,6 +58,10 @@ export const postSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.error = action.error.message;
+            })
+            .addCase(deletePost.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.posts = state.posts.filter(post => post.id != action.payload.id);
             })
     }
 })
