@@ -35,7 +35,12 @@ const Home = () => {
                     <h3 onClick={() => navigate(`/post/${post.id}`)} className='text-red-500 font-semibold uppercase cursor-pointer'>{post.title}</h3>
                     <p>{post.body}</p>
                     <div className='flex gap-2 my-2'>
-                        <button className='bg-green-500 px-4 py-1 text-white'>Edit</button>
+                        <button
+                            onClick={() => navigate(`/edit/${post.id}`)} // Go to edit page
+                            className="bg-green-500 px-4 py-1 text-white"
+                        >
+                            Edit
+                        </button>
                         <button onClick={() => handleDeletePost(post.id)} className='bg-red-500 px-4 py-1 text-white'>Delete</button>
                     </div>
                 </div>
